@@ -17,12 +17,12 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto " />
         </Grid.RowDefinitions>
-        <Button Content="Login" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Width="50" Margin="25" Click="Button_Click" />
-        <Button Content="Logout" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Width="50" Margin="100 25" />
+        <TextBox x:Name="TokenTextBox" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Width="264" Margin="10,10,0,0" Text="9v8fvhlohlthu45bl7sodeius29ii2" />
+        <Button Content="Login" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Width="50" Margin="279,10,0,0" Click="Button_Click" />
         <Border  Grid.Column="0" Grid.Row="1" BorderThickness="1" BorderBrush="DarkGray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="150">
             <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                <TextBlock x:Name="Output" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" Foreground="Black"
-                        FontFamily="Consolas" Padding="5" Text="{Binding Source={StaticResource LogData}, Path=Content, Mode=OneWay}"/>
+                <TextBox x:Name="Output" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" Foreground="Black"
+                        FontFamily="Consolas" Padding="5" IsReadOnly="True" Text="{Binding Source={StaticResource LogData}, Path=Content, Mode=OneWay}"/>
             </ScrollViewer>
         </Border>
     </Grid>

@@ -38,9 +38,10 @@ namespace PredatorDev.Spudz.TestApp
         {
             try
             {
-                this.fogbugz = new FogBugzManager("https://predatordev.fogbugz.com/api.asp", "9v8fvhlohlthu45bl7sodeius29ii2");
-                //this.fogbugz = new FogBugzManager("https://predatordev.fogbugz.com/api.asp", "test", "spassword");
-                _logger.AppendLine("Sign on successful");
+                string token = TokenTextBox.Text;
+                this.fogbugz = new FogBugzManager("https://predatordev.fogbugz.com/api.asp", token);
+                // this.fogbugz = new FogBugzManager("https://predatordev.fogbugz.com/api.asp", "test", "password");
+                _logger.AppendLine("Signed on");
             }
             catch (Exception error)
             {
