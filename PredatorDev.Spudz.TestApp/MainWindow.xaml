@@ -25,5 +25,6 @@
                         FontFamily="Consolas" Padding="5" IsReadOnly="True" Text="{Binding Source={StaticResource LogData}, Path=Content, Mode=OneWay}"/>
             </ScrollViewer>
         </Border>
+        <Button x:Name="TicketsButton" Content="Get Tickets" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="75" Click="TicketsButton_Click"/>
     </Grid>
 </Window>

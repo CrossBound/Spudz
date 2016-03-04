@@ -40,8 +40,20 @@ namespace PredatorDev.Spudz.TestApp
             {
                 string token = TokenTextBox.Text;
                 this.fogbugz = new FogBugzManager("https://predatordev.fogbugz.com/api.asp", token);
-                // this.fogbugz = new FogBugzManager("https://predatordev.fogbugz.com/api.asp", "test", "password");
                 _logger.AppendLine("Signed on");
+            }
+            catch (Exception error)
+            {
+                _logger.AppendLine(error.Message);
+            }
+        }
+
+        private void TicketsButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string tickets = this.fogbugz.Tickets;
+                _logger.AppendLine(tickets);
             }
             catch (Exception error)
             {
