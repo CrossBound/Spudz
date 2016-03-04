@@ -1,0 +1,29 @@
+﻿<Window x:Class="PredatorDev.Spudz.TestApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PredatorDev.Spudz.TestApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <local:StringLog x:Key="LogData" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto " />
+        </Grid.RowDefinitions>
+        <Button Content="Login" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Width="50" Margin="25" Click="Button_Click" />
+        <Button Content="Logout" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Width="50" Margin="100 25" />
+        <Border  Grid.Column="0" Grid.Row="1" BorderThickness="1" BorderBrush="DarkGray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="150">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                <TextBlock x:Name="Output" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" Foreground="Black"
+                        FontFamily="Consolas" Padding="5" Text="{Binding Source={StaticResource LogData}, Path=Content, Mode=OneWay}"/>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>
