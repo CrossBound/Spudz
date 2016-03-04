@@ -41,7 +41,7 @@ namespace PredatorDev.Spudz
                     select fbCase;
 
                 StringBuilder casesString = new StringBuilder();
-                casesString.AppendLine("  bug  |     Priority    |          Status           |        Assigned To        |   Title");
+                casesString.AppendLine("  Bug  |     Priority    |          Status           |        Assigned To        |   Title");
                 foreach (XElement fbCase in cases)
                 {
                     casesString.AppendFormat("{0, -6} | {1, -15} | {2, -25} | {3, -25} | {4}\n",
@@ -69,50 +69,52 @@ namespace PredatorDev.Spudz
         //{
         //    this.URL = new Uri(URL);
         //    this.client = new HttpClient();
-        //    this.UserName = UserName;
-        //    this.password = Password;
-        //    this.token = null;
-        //    this.Tickets = null;
-        //    this.signon();
+        //    this.Login(UserName, Password);
         //}
 
         public FogBugzManager(string URL, string Token)
         {
             this.URL = new Uri(URL);
             this.client = new HttpClient();
-            this.UserName = null;
-            this.password = null;
-            this.token = Token;
-            this.Tickets = null;
-            this.signon();
+            this.Login(Token);
+        }
+
+        public FogBugzManager(string URL)
+        {
+            this.URL = new Uri(URL);
+            this.client = new HttpClient();
         }
 
         #endregion
 
         #region public_member_methods
 
+        public void Login(string Token)
+        {
+            this.token = Token;
+            this.login(new KeyValuePair<string, string>[] { new KeyValuePair<string, string>("token", this.token) });
+        }
+
+        public void Login(string UserName, string Password)
+        {
+            this.UserName = UserName;
+            this.password = password;
+            KeyValuePair<string, string>[] values = new KeyValuePair<string, string>[]
+            {
+                new KeyValuePair<string, string>("email", this.UserName),
+                new KeyValuePair<string, string>("password", this.password)
+            };
+            this.login(values);
+        }
+
         #endregion
 
         #region private_member_methods
 
-        private void signon()
+        private void login(IEnumerable<KeyValuePair<string, string>> LoginInformation)
         {
             List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>();
-            if (this.token == null)
-            {
-                if (this.UserName == null || this.password == null)
-                {
-                    throw new ArgumentException("No username or password!");
-                }
-
-                values.Add(new KeyValuePair<string, string>("email", this.UserName));
-                values.Add(new KeyValuePair<string, string>("password", this.password));
-            }
-            else
-            {
-                values.Add(new KeyValuePair<string, string>("token", this.token));
-            }
-
+            values.AddRange(LoginInformation);
             values.Add(new KeyValuePair<string, string>("cmd", "logon"));
 
             string xmlResponse = this.submitRequest(values);
@@ -123,7 +125,7 @@ namespace PredatorDev.Spudz
             }
         }
 
-        private void signoff()
+        private void logoff()
         {
             List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>();
             values.Add(new KeyValuePair<string, string>("token", this.token));
@@ -175,7 +177,8 @@ namespace PredatorDev.Spudz
 
             for (int i = 0; i < Errors.Count(); i++)
             {
-                message.AppendFormat("   [ {0} ] {1} \n", Errors.ElementAt(i).Attribute("code").Value, Errors.ElementAt(i).Value);
+                if(i > 0) { message.Append(Environment.NewLine); }
+                message.AppendFormat("   [ {0} ] {1}", Errors.ElementAt(i).Attribute("code").Value, Errors.ElementAt(i).Value);
             }
 
             return new Exception(message.ToString());

@@ -32,6 +32,16 @@ namespace PredatorDev.Spudz.TestApp
             // REFERENCE CREDIT: mijacobs @ https://msdn.microsoft.com/en-us/windows/uwp/controls-and-patterns/resourcedictionary-and-xaml-resource-references
             _logger = (StringLog)this.Resources["LogData"];
             _logger.AppendLine("initialized");
+
+            try
+            {
+                this.fogbugz = new FogBugzManager("https://predatordev.fogbugz.com/api.asp");
+                _logger.AppendLine("FogBugz Manager object set");
+            }
+            catch (Exception error)
+            {
+                _logger.AppendLine(error.Message);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -39,7 +49,7 @@ namespace PredatorDev.Spudz.TestApp
             try
             {
                 string token = TokenTextBox.Text;
-                this.fogbugz = new FogBugzManager("https://predatordev.fogbugz.com/api.asp", token);
+                this.fogbugz.Login(token);
                 _logger.AppendLine("Signed on");
             }
             catch (Exception error)
